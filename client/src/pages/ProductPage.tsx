@@ -64,7 +64,19 @@ export default function ProductPage() {
       return;
     }
     
-    addToCart(product.id, 1, selectedSize || undefined, selectedColor || undefined);
+    try {
+      await addToCart(product.id, 1, selectedSize || undefined, selectedColor || undefined);
+      toast({
+        title: "Success",
+        description: "Item added to cart",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart",
+        variant: "destructive"
+      });
+    }
   };
   
   return (
