@@ -478,13 +478,13 @@ export class MemStorage implements IStorage {
     const sp5derTshirt = await this.createProduct({
       name: "SP5DER T-Shirt",
       slug: "sp5der-tshirt",
-      description: "Authentic SP5DER t-shirt with the iconic spider web logo. Premium cotton construction for everyday comfort and style.",
+      description: "Authentic SP5DER t-shirt with the iconic spider web logo. Premium cotton construction for everyday comfort and style. Currently out of stock - sign up for restock notifications.",
       price: 79,
       originalPrice: 99,
       inspirationBrand: "SP5DER",
-      inStock: true,
+      inStock: false,
       categoryId: sp5derCategory.id,
-      details: "The SP5DER t-shirt features the brand's signature spider web design printed on high-quality cotton fabric. The shirt has a modern fit with a crew neckline and short sleeves, making it perfect for everyday wear or as a statement piece in your streetwear collection.",
+      details: "The SP5DER t-shirt features the brand's signature spider web design printed on high-quality cotton fabric. The shirt has a modern fit with a crew neckline and short sleeves, making it perfect for everyday wear or as a statement piece in your streetwear collection. Due to high demand, this item is currently sold out.",
       comparison: "This is an authentic SP5DER t-shirt with the genuine spider web design and branding.",
       material: "100% Cotton\nMachine washable\nImported",
       featured: true,
@@ -503,7 +503,7 @@ export class MemStorage implements IStorage {
       await this.createProductSize({
         productId: sp5derTshirt.id,
         size,
-        available: true
+        available: false
       });
     }
 
