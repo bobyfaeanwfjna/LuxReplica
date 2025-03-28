@@ -383,7 +383,7 @@ export class MemStorage implements IStorage {
     const categories = [
       { name: "Sp5der", slug: "sp5der", imageUrl: "/images/sp5der-category.png" },
       { name: "Hellstar", slug: "hellstar", imageUrl: "/images/hellstar-category.png" },
-      { name: "Denim Tears", slug: "denim-tears", imageUrl: "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
+      { name: "Denim Tears", slug: "denim-tears", imageUrl: "/images/denim-tears-category.png" }
     ];
     
     categories.forEach(category => {
@@ -614,7 +614,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: denimTearsJeans.id,
-      imageUrl: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      imageUrl: "/images/denim-tears-jeans.png",
       isPrimary: true
     });
 
@@ -665,7 +665,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: denimTearsHoodie.id,
-      imageUrl: "https://images.unsplash.com/photo-1578681994506-b8f463449011?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      imageUrl: "/images/denim-tears-hoodie.png",
       isPrimary: true
     });
 
