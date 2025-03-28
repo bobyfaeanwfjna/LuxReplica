@@ -440,7 +440,7 @@ export class MemStorage implements IStorage {
       });
     }
 
-    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#FF0000", "Red"]]) {
+    for (const [color, colorName] of [["#9B8579", "Sand Beluga"], ["#F4B8C5", "Pink V2"], ["#000000", "Black"]]) {
       await this.createProductColor({
         productId: sp5derHoodie.id,
         color,
