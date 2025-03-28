@@ -28,7 +28,7 @@ async function createZip() {
       'server/**/*.ts',
       'shared/**/*.ts',
       'package.json',
-      'tsconfig.json',
+      'tsconfig.json', 
       'vite.config.ts',
       'tailwind.config.ts',
       'postcss.config.js'
@@ -64,12 +64,37 @@ async function createZip() {
       output.on('error', reject);
     });
 
-    // Now read and encode the zip
-    const zipContent = fs.readFileSync('source-code.zip');
-    const base64Content = zipContent.toString('base64');
-    fs.writeFileSync('source-code.txt', base64Content);
+    // Create an HTML file with download links
+    const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Download Source Code</title>
+      <style>
+        body { font-family: system-ui; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .button { 
+          display: inline-block;
+          padding: 10px 20px;
+          background: #0066ff;
+          color: white;
+          text-decoration: none;
+          border-radius: 4px;
+          margin: 10px 0;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Download Source Code</h1>
+      <a href="source-code.zip" download class="button">Download ZIP</a>
+      <pre>${fileList}</pre>
+    </body>
+    </html>`;
+
+    fs.writeFileSync('download.html', html);
 
     console.log('Process completed successfully!');
+    console.log('Open download.html in your browser to download the zip file');
+
   } catch (error) {
     console.error('Error creating zip:', error);
     process.exit(1);
