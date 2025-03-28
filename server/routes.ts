@@ -5,8 +5,12 @@ import { randomUUID } from "crypto";
 import { insertCartItemSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import cookieParser from "cookie-parser";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Add middleware
+  app.use(cookieParser());
+  
   // API routes
   app.get("/api/categories", async (req: Request, res: Response) => {
     const categories = await storage.getCategories();
