@@ -45,7 +45,7 @@ export default function HomePage() {
       {/* Featured Categories */}
       <section className="py-16 px-4 md:px-6">
         <div className="container mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl mb-8 text-center">Shop by Category</h2>
+          <h2 className="font-sans text-2xl md:text-3xl mb-8 text-center">Shop by Category</h2>
           
           {isCategoriesLoading ? (
             <div className="flex justify-center py-8">
