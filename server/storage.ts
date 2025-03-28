@@ -14,12 +14,22 @@ import {
   Review,
   CartItem,
   ProductWithDetails,
-  CartItemWithProduct,
-  products,
-  users,
-  type User,
-  type InsertUser
+  CartItemWithProduct
 } from "@shared/schema";
+
+// Define User types since they're not in shared schema
+interface User {
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+}
+
+interface InsertUser {
+  username: string;
+  password: string;
+  email: string;
+}
 
 // Modify the interface with CRUD methods
 export interface IStorage {
@@ -371,9 +381,9 @@ export class MemStorage implements IStorage {
   private initializeData() {
     // Categories
     const categories = [
-      { name: "Men", slug: "men", imageUrl: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-      { name: "Women", slug: "women", imageUrl: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-      { name: "Accessories", slug: "accessories", imageUrl: "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
+      { name: "Sp5der", slug: "sp5der", imageUrl: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+      { name: "Hellstar", slug: "hellstar", imageUrl: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+      { name: "Denim Tears", slug: "denim-tears", imageUrl: "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
     ];
     
     categories.forEach(category => {
@@ -381,34 +391,86 @@ export class MemStorage implements IStorage {
     });
 
     // Products
-    const menCategory = this.getCategoryBySlug('men') as Promise<Category>;
-    const womenCategory = this.getCategoryBySlug('women') as Promise<Category>;
-    const accessoriesCategory = this.getCategoryBySlug('accessories') as Promise<Category>;
+    const sp5derCategory = this.getCategoryBySlug('sp5der') as Promise<Category>;
+    const hellstarCategory = this.getCategoryBySlug('hellstar') as Promise<Category>;
+    const denimTearsCategory = this.getCategoryBySlug('denim-tears') as Promise<Category>;
 
     // Create sample data
     this.initializeSampleData();
   }
 
   private async initializeSampleData() {
-    const menCategory = await this.getCategoryBySlug('men');
-    const womenCategory = await this.getCategoryBySlug('women');
-    const accessoriesCategory = await this.getCategoryBySlug('accessories');
+    const sp5derCategory = await this.getCategoryBySlug('sp5der');
+    const hellstarCategory = await this.getCategoryBySlug('hellstar');
+    const denimTearsCategory = await this.getCategoryBySlug('denim-tears');
 
-    if (!menCategory || !womenCategory || !accessoriesCategory) return;
+    if (!sp5derCategory || !hellstarCategory || !denimTearsCategory) return;
 
-    // Men's products
-    const overcoat = await this.createProduct({
-      name: "Premium Wool Overcoat",
-      slug: "premium-wool-overcoat",
-      description: "Our premium wool overcoat is meticulously crafted with high-quality materials and exceptional attention to detail. This classic piece features a timeless design with a modern fit.",
-      price: 299,
-      originalPrice: 499,
-      inspirationBrand: "Burberry",
+    // SP5DER PRODUCTS
+    // 1. SP5DER Hoodie
+    const sp5derHoodie = await this.createProduct({
+      name: "SP5DER Hoodie",
+      slug: "sp5der-hoodie",
+      description: "Authentic SP5DER hoodie featuring the iconic spider web design on the front and back. Made with premium cotton blend for exceptional comfort and streetwear style.",
+      price: 149,
+      originalPrice: 199,
+      inspirationBrand: "SP5DER",
       inStock: true,
-      categoryId: menCategory.id,
-      details: "This premium overcoat is crafted from a luxury wool blend, featuring a classic silhouette with subtle modern updates. The tailored fit and clean lines create a sophisticated profile that transitions seamlessly from business to evening wear.",
-      comparison: "Similarities include the premium wool composition, similar silhouette and cut, comparable button quality, and attention to detail in the stitching.\n\nDifferences include our version costs $299 vs. $1,500+ retail price, subtle difference in the lining pattern, and minor variations in the hardware.",
-      material: "Outer: 80% Wool, 20% Cashmere\nLining: 100% Viscose\nButtons: Natural horn",
+      categoryId: sp5derCategory.id,
+      details: "The SP5DER hoodie features the brand's signature web pattern design. The hoodie is crafted from high-quality cotton blend fabric with a soft interior lining for ultimate comfort and warmth. Features include an adjustable drawstring hood, ribbed cuffs and hem, and a front kangaroo pocket.",
+      comparison: "This is an authentic SP5DER hoodie with authentic spider web design and branding.",
+      material: "80% Cotton, 20% Polyester\nMachine washable\nImported",
+      featured: true,
+      newArrival: true,
+      bestSeller: true,
+      topRated: true
+    });
+
+    await this.createProductImage({
+      productId: sp5derHoodie.id,
+      imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      isPrimary: true
+    });
+
+    for (const size of ["S", "M", "L", "XL", "XXL"]) {
+      await this.createProductSize({
+        productId: sp5derHoodie.id,
+        size,
+        available: true
+      });
+    }
+
+    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#FF0000", "Red"]]) {
+      await this.createProductColor({
+        productId: sp5derHoodie.id,
+        color,
+        colorName
+      });
+    }
+
+    await this.createReview({
+      productId: sp5derHoodie.id,
+      rating: 5,
+      title: "Excellent quality hoodie",
+      content: "The material is super soft and the design is clean. Fits perfectly and looks exactly like the photos online.",
+      authorName: "Marcus J.",
+      verifiedPurchase: true,
+      date: new Date("2023-10-15")
+    });
+
+    // 2. SP5DER T-Shirt
+    const sp5derTshirt = await this.createProduct({
+      name: "SP5DER T-Shirt",
+      slug: "sp5der-tshirt",
+      description: "Authentic SP5DER t-shirt with the iconic spider web logo. Premium cotton construction for everyday comfort and style.",
+      price: 79,
+      originalPrice: 99,
+      inspirationBrand: "SP5DER",
+      inStock: true,
+      categoryId: sp5derCategory.id,
+      details: "The SP5DER t-shirt features the brand's signature spider web design printed on high-quality cotton fabric. The shirt has a modern fit with a crew neckline and short sleeves, making it perfect for everyday wear or as a statement piece in your streetwear collection.",
+      comparison: "This is an authentic SP5DER t-shirt with the genuine spider web design and branding.",
+      material: "100% Cotton\nMachine washable\nImported",
       featured: true,
       newArrival: false,
       bestSeller: true,
@@ -416,60 +478,92 @@ export class MemStorage implements IStorage {
     });
 
     await this.createProductImage({
-      productId: overcoat.id,
-      imageUrl: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      productId: sp5derTshirt.id,
+      imageUrl: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       isPrimary: true
     });
 
     for (const size of ["S", "M", "L", "XL", "XXL"]) {
       await this.createProductSize({
-        productId: overcoat.id,
+        productId: sp5derTshirt.id,
         size,
         available: true
       });
     }
 
-    for (const [color, colorName] of [["#000000", "Black"], ["#5F4B32", "Camel"], ["#7B7B7B", "Grey"]]) {
+    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#0000FF", "Blue"]]) {
       await this.createProductColor({
-        productId: overcoat.id,
+        productId: sp5derTshirt.id,
+        color,
+        colorName
+      });
+    }
+
+    // HELLSTAR PRODUCTS
+    // 1. Hellstar Hoodie
+    const hellstarHoodie = await this.createProduct({
+      name: "Hellstar Hoodie",
+      slug: "hellstar-hoodie",
+      description: "Authentic Hellstar hoodie featuring the iconic pentagram and stars design. Premium quality streetwear with unique gothic aesthetic.",
+      price: 159,
+      originalPrice: 209,
+      inspirationBrand: "Hellstar",
+      inStock: true,
+      categoryId: hellstarCategory.id,
+      details: "The Hellstar hoodie showcases the brand's distinctive pentagram and star motifs that have made it a standout in contemporary streetwear. This premium hoodie is crafted with a heavyweight cotton blend for durability and comfort, featuring a relaxed fit, adjustable hood, and kangaroo pocket.",
+      comparison: "This is an authentic Hellstar hoodie with the brand's signature gothic designs and premium construction.",
+      material: "80% Cotton, 20% Polyester\nHeavyweight fabric\nMachine washable",
+      featured: true,
+      newArrival: true,
+      bestSeller: false,
+      topRated: true
+    });
+
+    await this.createProductImage({
+      productId: hellstarHoodie.id,
+      imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      isPrimary: true
+    });
+
+    for (const size of ["S", "M", "L", "XL", "XXL"]) {
+      await this.createProductSize({
+        productId: hellstarHoodie.id,
+        size,
+        available: true
+      });
+    }
+
+    for (const [color, colorName] of [["#000000", "Black"], ["#FF0000", "Red"], ["#800080", "Purple"]]) {
+      await this.createProductColor({
+        productId: hellstarHoodie.id,
         color,
         colorName
       });
     }
 
     await this.createReview({
-      productId: overcoat.id,
+      productId: hellstarHoodie.id,
       rating: 5,
-      title: "Excellent quality coat",
-      content: "This coat feels and looks like genuine luxury. The wool is soft yet substantial and the fit is perfect. I've received many compliments.",
-      authorName: "James T.",
+      title: "Best hoodie I own",
+      content: "The quality is unmatched - thick material, perfect print, and super comfortable. I get compliments every time I wear it.",
+      authorName: "Alex T.",
       verifiedPurchase: true,
-      date: new Date("2023-03-15")
+      date: new Date("2023-11-05")
     });
 
-    await this.createReview({
-      productId: overcoat.id,
-      rating: 4,
-      title: "Almost perfect",
-      content: "Beautiful coat with great quality. The only reason for 4 stars instead of 5 is that the sleeves run slightly long.",
-      authorName: "Sarah K.",
-      verifiedPurchase: true,
-      date: new Date("2023-02-03")
-    });
-
-    // Women's product
-    const crossbody = await this.createProduct({
-      name: "Premium Leather Crossbody",
-      slug: "premium-leather-crossbody",
-      description: "Our premium leather crossbody bag is crafted with genuine calfskin leather and features meticulous stitching and a sleek gold-tone chain strap.",
-      price: 199,
-      originalPrice: 349,
-      inspirationBrand: "Saint Laurent",
+    // 2. Hellstar Cargo Pants
+    const hellstarPants = await this.createProduct({
+      name: "Hellstar Cargo Pants",
+      slug: "hellstar-cargo-pants",
+      description: "Authentic Hellstar cargo pants with signature embroidered details and multiple pockets. Durable construction with a modern fit.",
+      price: 129,
+      originalPrice: 169,
+      inspirationBrand: "Hellstar",
       inStock: true,
-      categoryId: womenCategory.id,
-      details: "This elegant crossbody bag is made from full-grain Italian leather with a soft, luxury finish. Featuring a distinctive flap closure with subtle brand-inspired elements, this versatile piece transitions seamlessly from day to night.",
-      comparison: "Similarities include premium leather quality, identical hardware color and finish, similar interior organization, and comparable stitching precision.\n\nDifferences include our version costs $199 vs. $1,800+ retail price, subtle differences in logo placement, and slightly different dust bag design.",
-      material: "Exterior: 100% Calfskin leather\nLining: Microfiber suede\nHardware: Gold-tone metal",
+      categoryId: hellstarCategory.id,
+      details: "These Hellstar cargo pants feature the brand's signature embroidered details and an array of functional pockets. Constructed from durable cotton with a slight stretch for comfort, these pants offer both style and utility with their relaxed fit and distinctive streetwear aesthetic.",
+      comparison: "These are authentic Hellstar cargo pants with genuine embroidery and design elements.",
+      material: "98% Cotton, 2% Elastane\nDurable twill construction\nMachine washable",
       featured: true,
       newArrival: true,
       bestSeller: true,
@@ -477,240 +571,129 @@ export class MemStorage implements IStorage {
     });
 
     await this.createProductImage({
-      productId: crossbody.id,
-      imageUrl: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      productId: hellstarPants.id,
+      imageUrl: "https://images.unsplash.com/photo-1596609548086-185b28d99687?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       isPrimary: true
     });
 
-    await this.createProductSize({
-      productId: crossbody.id,
-      size: "One Size",
-      available: true
-    });
-
-    for (const [color, colorName] of [["#000000", "Black"], ["#800000", "Burgundy"], ["#C3B091", "Beige"]]) {
-      await this.createProductColor({
-        productId: crossbody.id,
-        color,
-        colorName
-      });
-    }
-
-    await this.createReview({
-      productId: crossbody.id,
-      rating: 5,
-      title: "Luxurious bag at amazing price",
-      content: "I can't believe the quality of this bag for the price. Friends have asked if it's authentic YSL - the craftsmanship is that good.",
-      authorName: "Michelle D.",
-      verifiedPurchase: true,
-      date: new Date("2023-04-10")
-    });
-
-    // Accessory product
-    const sneakers = await this.createProduct({
-      name: "Premium Leather Sneakers",
-      slug: "premium-leather-sneakers",
-      description: "Our premium leather sneakers are meticulously crafted with Italian calfskin leather and hand-stitched construction. These minimalist, versatile sneakers feature a sleek silhouette, durable rubber outsole, and premium comfort insole.",
-      price: 179,
-      originalPrice: 249,
-      inspirationBrand: "Common Projects",
-      inStock: true,
-      categoryId: accessoriesCategory.id,
-      details: "These premium sneakers are a meticulously crafted replica of the iconic Common Projects Achilles Low. Featuring the same minimalist design and sleek silhouette, our version is made with high-quality materials that provide exceptional comfort and durability at a fraction of the retail price.",
-      comparison: "Similarities include identical silhouette and minimalist design, same high-quality Margom rubber sole, comparable leather quality and texture, matching gold serial number stamp, similar comfort and durability.\n\nDifferences include our version costs $179 vs. $425 retail price, subtle difference in the interior stamping, minor variations in the box and packaging.",
-      material: "Upper: Full-grain Italian calfskin leather\nLining: Soft leather\nInsole: Padded leather\nOutsole: Margom rubber\nLaces: Waxed cotton",
-      featured: true,
-      newArrival: false,
-      bestSeller: false,
-      topRated: true
-    });
-
-    await this.createProductImage({
-      productId: sneakers.id,
-      imageUrl: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      isPrimary: true
-    });
-
-    await this.createProductImage({
-      productId: sneakers.id,
-      imageUrl: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-      isPrimary: false
-    });
-
-    await this.createProductImage({
-      productId: sneakers.id,
-      imageUrl: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-      isPrimary: false
-    });
-
-    await this.createProductImage({
-      productId: sneakers.id,
-      imageUrl: "https://images.unsplash.com/photo-1543508282-6319a3e2621f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-      isPrimary: false
-    });
-
-    for (const size of ["7", "8", "9", "10", "11", "12"]) {
+    for (const size of ["30", "32", "34", "36", "38"]) {
       await this.createProductSize({
-        productId: sneakers.id,
-        size,
-        available: size !== "12"
-      });
-    }
-
-    for (const [color, colorName] of [["#FFFFFF", "White"], ["#000000", "Black"], ["#8B4513", "Brown"]]) {
-      await this.createProductColor({
-        productId: sneakers.id,
-        color,
-        colorName
-      });
-    }
-
-    await this.createReview({
-      productId: sneakers.id,
-      rating: 5,
-      title: "Excellent quality, incredible value",
-      content: "I own the authentic Common Projects and these are remarkably close in quality. The leather is soft, the construction is excellent, and they look identical. For less than half the price, these are an incredible value. Highly recommended!",
-      authorName: "James T.",
-      verifiedPurchase: true,
-      date: new Date("2023-03-15")
-    });
-
-    await this.createReview({
-      productId: sneakers.id,
-      rating: 4,
-      title: "Great shoes, slight break-in period",
-      content: "These look amazing and the quality is very good for the price. They took about a week to break in completely, but now they're very comfortable. Sizing is accurate, I ordered my usual size and they fit perfectly.",
-      authorName: "Sarah K.",
-      verifiedPurchase: true,
-      date: new Date("2023-02-03")
-    });
-
-    await this.createReview({
-      productId: sneakers.id,
-      rating: 4,
-      title: "Impressive quality, friends can't tell the difference",
-      content: "I've had these for about 3 months now, and they've held up beautifully. The leather has developed a nice patina and they get more comfortable with wear. My friends who own the authentic ones couldn't tell the difference until I pointed it out.",
-      authorName: "Michael R.",
-      verifiedPurchase: true,
-      date: new Date("2023-01-17")
-    });
-
-    // Additional products
-    const sunglasses = await this.createProduct({
-      name: "Premium Aviator Sunglasses",
-      slug: "premium-aviator-sunglasses",
-      description: "Our premium aviator sunglasses feature a classic, timeless design with polarized lenses and a durable metal frame.",
-      price: 89,
-      originalPrice: 129,
-      inspirationBrand: "Ray-Ban",
-      inStock: true,
-      categoryId: accessoriesCategory.id,
-      details: "These aviator sunglasses are crafted with precision to offer both style and functionality. The polarized lenses reduce glare and improve visual clarity, while the lightweight frame ensures comfort for all-day wear.",
-      comparison: "Similarities include the classic aviator shape, similar weight and balance, comparable lens quality, and durable frame construction.\n\nDifferences include our version costs $89 vs. $200+ retail price, subtle differences in logo engraving, and slightly different case design.",
-      material: "Frame: Metal alloy\nLenses: Polarized, 100% UV protection\nNose pads: Silicone",
-      featured: true,
-      newArrival: false,
-      bestSeller: false,
-      topRated: true
-    });
-
-    await this.createProductImage({
-      productId: sunglasses.id,
-      imageUrl: "https://images.unsplash.com/photo-1638394440667-aa54a7c0a703?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      isPrimary: true
-    });
-
-    await this.createProductSize({
-      productId: sunglasses.id,
-      size: "One Size",
-      available: true
-    });
-
-    for (const [color, colorName] of [["#000000", "Black/Green"], ["#964B00", "Brown/Brown"], ["#C0C0C0", "Silver/Blue"]]) {
-      await this.createProductColor({
-        productId: sunglasses.id,
-        color,
-        colorName
-      });
-    }
-
-    const blazer = await this.createProduct({
-      name: "Premium Tailored Blazer",
-      slug: "premium-tailored-blazer",
-      description: "Our premium tailored blazer offers sophisticated style with exceptional craftsmanship and attention to detail.",
-      price: 249,
-      originalPrice: 399,
-      inspirationBrand: "Tom Ford",
-      inStock: true,
-      categoryId: menCategory.id,
-      details: "This blazer features a sophisticated cut with structured shoulders and a slim, flattering silhouette. Crafted from premium Italian wool, it maintains its shape and offers breathable comfort for year-round wear.",
-      comparison: "Similarities include the premium wool quality, comparable construction techniques, similar silhouette and lapel design, and attention to detail in the lining and pockets.\n\nDifferences include our version costs $249 vs. $3,000+ retail price, subtle differences in stitching details, and variations in the interior label design.",
-      material: "Shell: 100% Italian wool\nLining: 100% Viscose\nButtons: Horn",
-      featured: true,
-      newArrival: false,
-      bestSeller: false,
-      topRated: false
-    });
-
-    await this.createProductImage({
-      productId: blazer.id,
-      imageUrl: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      isPrimary: true
-    });
-
-    for (const size of ["36", "38", "40", "42", "44", "46"]) {
-      await this.createProductSize({
-        productId: blazer.id,
+        productId: hellstarPants.id,
         size,
         available: true
       });
     }
 
-    for (const [color, colorName] of [["#000000", "Black"], ["#191970", "Navy"], ["#808080", "Grey"]]) {
+    for (const [color, colorName] of [["#000000", "Black"], ["#808080", "Grey"], ["#5D4037", "Brown"]]) {
       await this.createProductColor({
-        productId: blazer.id,
+        productId: hellstarPants.id,
         color,
         colorName
       });
     }
 
-    const scarf = await this.createProduct({
-      name: "Premium Silk Scarf",
-      slug: "premium-silk-scarf",
-      description: "Our premium silk scarf is crafted from 100% pure silk with hand-rolled edges and a luxurious hand feel.",
-      price: 119,
-      originalPrice: 179,
-      inspirationBrand: "Hermès",
+    // DENIM TEARS PRODUCTS
+    // 1. Denim Tears Cotton Wreath Jeans
+    const denimTearsJeans = await this.createProduct({
+      name: "Cotton Wreath Jeans",
+      slug: "denim-tears-cotton-wreath-jeans",
+      description: "Authentic Denim Tears jeans featuring the iconic cotton wreath print. Premium denim with a classic straight-leg fit.",
+      price: 189,
+      originalPrice: 249,
+      inspirationBrand: "Denim Tears",
       inStock: true,
-      categoryId: accessoriesCategory.id,
-      details: "This exquisite silk scarf features a distinctive print inspired by classic designs, created with meticulous attention to detail. The premium silk twill provides a luxurious drape and beautiful sheen.",
-      comparison: "Similarities include the premium silk quality, comparable print detail and color vibrancy, similar hand-rolled edge technique, and elegant drape.\n\nDifferences include our version costs $119 vs. $400+ retail price, subtle differences in the print design, and variations in the box packaging.",
-      material: "100% Silk twill\nHand-rolled edges",
+      categoryId: denimTearsCategory.id,
+      details: "These Denim Tears jeans feature the brand's iconic cotton wreath print, a powerful symbol that has become synonymous with the label. Crafted from premium denim with a classic straight-leg fit, these jeans combine cultural significance with everyday wearability.",
+      comparison: "These are authentic Denim Tears jeans with the genuine cotton wreath design and premium construction.",
+      material: "100% Cotton denim\nRigid construction\nMade in USA",
       featured: true,
-      newArrival: false,
-      bestSeller: false,
+      newArrival: true,
+      bestSeller: true,
       topRated: true
     });
 
     await this.createProductImage({
-      productId: scarf.id,
-      imageUrl: "https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      productId: denimTearsJeans.id,
+      imageUrl: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       isPrimary: true
     });
 
-    await this.createProductSize({
-      productId: scarf.id,
-      size: "One Size",
-      available: true
-    });
+    for (const size of ["30", "32", "34", "36", "38"]) {
+      await this.createProductSize({
+        productId: denimTearsJeans.id,
+        size,
+        available: true
+      });
+    }
 
-    for (const [color, colorName] of [["#C3B091", "Beige"], ["#000080", "Navy"], ["#800000", "Burgundy"]]) {
+    for (const [color, colorName] of [["#0000FF", "Blue"], ["#000000", "Black"], ["#FFFFFF", "White"]]) {
       await this.createProductColor({
-        productId: scarf.id,
+        productId: denimTearsJeans.id,
         color,
         colorName
       });
     }
+
+    await this.createReview({
+      productId: denimTearsJeans.id,
+      rating: 5,
+      title: "Cultural statement piece",
+      content: "Not only are these jeans incredibly well-made, but the cotton wreath symbolism makes them a powerful cultural statement. The fit is perfect and the denim quality is exceptional.",
+      authorName: "Derek W.",
+      verifiedPurchase: true,
+      date: new Date("2023-09-20")
+    });
+
+    // 2. Denim Tears Cotton Wreath Hoodie
+    const denimTearsHoodie = await this.createProduct({
+      name: "Cotton Wreath Hoodie",
+      slug: "denim-tears-cotton-wreath-hoodie",
+      description: "Authentic Denim Tears hoodie featuring the symbolic cotton wreath design. Premium heavyweight cotton with a comfortable fit.",
+      price: 169,
+      originalPrice: 219,
+      inspirationBrand: "Denim Tears",
+      inStock: true,
+      categoryId: denimTearsCategory.id,
+      details: "This Denim Tears hoodie showcases the brand's signature cotton wreath design, a symbol rich with historical and cultural significance. Made from premium heavyweight cotton, this hoodie offers exceptional comfort with its relaxed fit and soft interior lining.",
+      comparison: "This is an authentic Denim Tears hoodie with the genuine cotton wreath design and premium quality construction.",
+      material: "100% Cotton\nHeavyweight 14oz fabric\nMachine washable\nMade in USA",
+      featured: true,
+      newArrival: false,
+      bestSeller: true,
+      topRated: true
+    });
+
+    await this.createProductImage({
+      productId: denimTearsHoodie.id,
+      imageUrl: "https://images.unsplash.com/photo-1578681994506-b8f463449011?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      isPrimary: true
+    });
+
+    for (const size of ["S", "M", "L", "XL", "XXL"]) {
+      await this.createProductSize({
+        productId: denimTearsHoodie.id,
+        size,
+        available: true
+      });
+    }
+
+    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#A52A2A", "Brown"]]) {
+      await this.createProductColor({
+        productId: denimTearsHoodie.id,
+        color,
+        colorName
+      });
+    }
+
+    await this.createReview({
+      productId: denimTearsHoodie.id,
+      rating: 5,
+      title: "Meaningful and comfortable",
+      content: "The cotton wreath design is beautifully executed and the hoodie itself is incredibly comfortable. Heavy fabric that feels like it will last for years.",
+      authorName: "Monica L.",
+      verifiedPurchase: true,
+      date: new Date("2023-08-12")
+    });
   }
 }
 
