@@ -39,7 +39,7 @@ export default function ProductGrid({
     <section className="py-16 px-4 md:px-6 bg-[#F5F5F5]">
       <div className="container mx-auto">
         {title && (
-          <h2 className="font-serif text-2xl md:text-3xl mb-4 text-center">{title}</h2>
+          <h2 className="font-sans text-2xl md:text-3xl mb-4 text-center">{title}</h2>
         )}
         
         {description && (
