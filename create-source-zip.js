@@ -1,6 +1,6 @@
 
-const fs = require('fs');
-const archiver = require('archiver');
+import fs from 'fs';
+import archiver from 'archiver';
 
 // Create a write stream for our zip
 const output = fs.createWriteStream('source-code.zip');
