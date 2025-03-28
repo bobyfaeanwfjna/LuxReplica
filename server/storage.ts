@@ -409,16 +409,16 @@ export class MemStorage implements IStorage {
     // SP5DER PRODUCTS
     // 1. SP5DER Hoodie
     const sp5derHoodie = await this.createProduct({
-      name: "SP5DER Hoodie",
+      name: "SP5DER Hoodie - Sand Beluga",
       slug: "sp5der-hoodie",
-      description: "Authentic SP5DER hoodie featuring the iconic spider web design on the front and back. Made with premium cotton blend for exceptional comfort and streetwear style.",
+      description: "Authentic SP5DER hoodie in the sought-after Sand Beluga colorway. Features the iconic spider web design on the front and back. Made with premium cotton blend for exceptional comfort and streetwear style.",
       price: 149,
       originalPrice: 199,
       inspirationBrand: "SP5DER",
       inStock: true,
       categoryId: sp5derCategory.id,
-      details: "The SP5DER hoodie features the brand's signature web pattern design. The hoodie is crafted from high-quality cotton blend fabric with a soft interior lining for ultimate comfort and warmth. Features include an adjustable drawstring hood, ribbed cuffs and hem, and a front kangaroo pocket.",
-      comparison: "This is an authentic SP5DER hoodie with authentic spider web design and branding.",
+      details: "The SP5DER hoodie features the brand's signature web pattern design in the popular Sand Beluga colorway with white logo print. The hoodie is crafted from high-quality cotton blend fabric with a soft interior lining for ultimate comfort and warmth. Features include an adjustable drawstring hood, ribbed cuffs and hem, and a front kangaroo pocket.",
+      comparison: "This is an authentic SP5DER hoodie with the genuine spider web design in the rare Sand Beluga color variant.",
       material: "80% Cotton, 20% Polyester\nMachine washable\nImported",
       featured: true,
       newArrival: true,
@@ -428,7 +428,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: sp5derHoodie.id,
-      imageUrl: "/images/sp5der-hoodie.png",
+      imageUrl: "/images/sp5der-hoodie-sand-beluga.png",
       isPrimary: true
     });
 
