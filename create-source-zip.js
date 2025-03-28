@@ -6,6 +6,9 @@ import archiver from 'archiver';
 const output = fs.createWriteStream('source-code.zip');
 const archive = archiver('zip', { zlib: { level: 9 } });
 
+// Keep track of files being added
+let fileList = 'Files included in the zip:\n\n';
+
 // Listen for archive events
 output.on('close', () => {
   // Read the zip file and convert to Base64
@@ -15,11 +18,7 @@ output.on('close', () => {
   // Write the Base64 content to a text file
   fs.writeFileSync('source-code.txt', base64Content);
   
-  // Create a readable listing of the zip contents
-  let fileList = 'Files included in the zip:\n\n';
-  archive.entries.forEach(entry => {
-    fileList += `${entry.name}\n`;
-  });
+  // Write the file list
   fs.writeFileSync('source-files.txt', fileList);
   
   console.log('Source code has been zipped and encoded!');
@@ -35,19 +34,18 @@ archive.on('error', (err) => {
 archive.pipe(output);
 
 // Add source code files while excluding binary and build files
-archive.glob('**/*.{js,jsx,ts,tsx,css,html}', {
-  ignore: [
-    'node_modules/**',
-    'dist/**',
-    '.git/**',
-    'build/**'
-  ]
+const files = ['**/*.{js,jsx,ts,tsx,css,html}', 'package.json', 'tsconfig.json', 'vite.config.ts'];
+files.forEach(pattern => {
+  archive.glob(pattern, {
+    ignore: ['node_modules/**', 'dist/**', '.git/**', 'build/**']
+  }, (err, matches) => {
+    if (!err) {
+      matches.forEach(file => {
+        fileList += `${file}\n`;
+      });
+    }
+  });
 });
-
-// Add specific config files
-archive.file('package.json');
-archive.file('tsconfig.json');
-archive.file('vite.config.ts');
 
 // Finalize the archive
 archive.finalize();
