@@ -409,16 +409,16 @@ export class MemStorage implements IStorage {
     // SP5DER PRODUCTS
     // 1. SP5DER Hoodie
     const sp5derHoodie = await this.createProduct({
-      name: "SP5DER Hoodie - Sand Beluga",
+      name: "SP5DER Hoodie",
       slug: "sp5der-hoodie",
-      description: "Authentic SP5DER hoodie in the sought-after Sand Beluga colorway. Features the iconic spider web design on the front and back. Made with premium cotton blend for exceptional comfort and streetwear style.",
+      description: "Authentic SP5DER hoodie available in the sought-after Sand Beluga and limited Pink V2 colorways. Features the iconic spider web design on the front and back. Made with premium cotton blend for exceptional comfort and streetwear style.",
       price: 149,
       originalPrice: 199,
       inspirationBrand: "SP5DER",
       inStock: true,
       categoryId: sp5derCategory.id,
-      details: "The SP5DER hoodie features the brand's signature web pattern design in the popular Sand Beluga colorway with white logo print. The hoodie is crafted from high-quality cotton blend fabric with a soft interior lining for ultimate comfort and warmth. Features include an adjustable drawstring hood, ribbed cuffs and hem, and a front kangaroo pocket.",
-      comparison: "This is an authentic SP5DER hoodie with the genuine spider web design in the rare Sand Beluga color variant.",
+      details: "The SP5DER hoodie showcases the brand's signature web pattern design in two exclusive colorways. The Sand Beluga features a neutral tone with clean white logo print, while the Pink V2 showcases a bold black base with vibrant pink logo and star accents. Each hoodie is crafted from high-quality cotton blend fabric with a soft interior lining for ultimate comfort and warmth. Features include an adjustable drawstring hood, ribbed cuffs and hem, and a front kangaroo pocket.",
+      comparison: "These are authentic SP5DER hoodies with the genuine spider web design in the rare Sand Beluga and Pink V2 color variants.",
       material: "80% Cotton, 20% Polyester\nMachine washable\nImported",
       featured: true,
       newArrival: true,
@@ -430,6 +430,12 @@ export class MemStorage implements IStorage {
       productId: sp5derHoodie.id,
       imageUrl: "/images/sp5der-hoodie-sand-beluga.png",
       isPrimary: true
+    });
+    
+    await this.createProductImage({
+      productId: sp5derHoodie.id,
+      imageUrl: "/images/sp5der-hoodie-pink-v2.png",
+      isPrimary: false
     });
 
     for (const size of ["S", "M", "L", "XL", "XXL"]) {
@@ -452,10 +458,20 @@ export class MemStorage implements IStorage {
       productId: sp5derHoodie.id,
       rating: 5,
       title: "Excellent quality hoodie",
-      content: "The material is super soft and the design is clean. Fits perfectly and looks exactly like the photos online.",
+      content: "The Pink V2 colorway is amazing! The material is super soft and the design is clean. The vibrant pink really pops against the black. Fits perfectly and looks exactly like the photos online.",
       authorName: "Marcus J.",
       verifiedPurchase: true,
       date: new Date("2023-10-15")
+    });
+    
+    await this.createReview({
+      productId: sp5derHoodie.id,
+      rating: 5,
+      title: "Rare Sand Beluga colorway",
+      content: "Finally got my hands on the Sand Beluga hoodie. The neutral color is perfect for everyday wear and the quality is top-notch. Love how it pairs with literally everything in my wardrobe.",
+      authorName: "Alyssa K.",
+      verifiedPurchase: true,
+      date: new Date("2023-11-02")
     });
 
     // 2. SP5DER T-Shirt
