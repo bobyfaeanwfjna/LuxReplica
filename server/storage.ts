@@ -655,19 +655,19 @@ export class MemStorage implements IStorage {
     }
 
     // DENIM TEARS PRODUCTS
-    // 1. Denim Tears Cotton Wreath Jeans
-    const denimTearsJeans = await this.createProduct({
-      name: "Cotton Wreath Jeans",
-      slug: "denim-tears-cotton-wreath-jeans",
-      description: "Authentic Denim Tears jeans featuring the iconic cotton wreath print. Premium denim with a classic straight-leg fit.",
-      price: 189,
-      originalPrice: 249,
+    // 1. Denim Tears Cotton Wreath Shorts
+    const denimTearsShorts = await this.createProduct({
+      name: "Cotton Wreath Sweat Shorts - Gray",
+      slug: "denim-tears-cotton-wreath-shorts",
+      description: "Authentic Denim Tears sweat shorts in heather gray featuring the iconic cotton wreath print. Premium cotton with an elastic waistband and drawstring for ultimate comfort.",
+      price: 139,
+      originalPrice: 189,
       inspirationBrand: "Denim Tears",
       inStock: true,
       categoryId: denimTearsCategory.id,
-      details: "These Denim Tears jeans feature the brand's iconic cotton wreath print, a powerful symbol that has become synonymous with the label. Crafted from premium denim with a classic straight-leg fit, these jeans combine cultural significance with everyday wearability.",
-      comparison: "These are authentic Denim Tears jeans with the genuine cotton wreath design and premium construction.",
-      material: "100% Cotton denim\nRigid construction\nMade in USA",
+      details: "These Denim Tears sweat shorts feature the brand's iconic cotton wreath print, a powerful symbol that has become synonymous with the label. The white cotton wreaths pop beautifully against the heather gray background. Crafted from premium cotton fleece with an elastic waistband, drawstring closure, and relaxed fit for maximum comfort and style.",
+      comparison: "These are authentic Denim Tears sweat shorts with the genuine cotton wreath design and premium construction.",
+      material: "100% Cotton fleece\nBrushed interior\nElastic waistband with drawstring\nMade in USA",
       featured: true,
       newArrival: true,
       bestSeller: true,
@@ -675,35 +675,45 @@ export class MemStorage implements IStorage {
     });
 
     await this.createProductImage({
-      productId: denimTearsJeans.id,
-      imageUrl: "/images/denim-tears-jeans.png",
+      productId: denimTearsShorts.id,
+      imageUrl: "/images/denim-tears-shorts.png", // Updated image name for consistency
       isPrimary: true
     });
 
-    for (const size of ["30", "32", "34", "36", "38"]) {
+    for (const size of ["S", "M", "L", "XL", "XXL"]) {
       await this.createProductSize({
-        productId: denimTearsJeans.id,
+        productId: denimTearsShorts.id,
         size,
         available: true
       });
     }
 
-    for (const [color, colorName] of [["#0000FF", "Blue"], ["#000000", "Black"], ["#FFFFFF", "White"]]) {
+    for (const [color, colorName] of [["#A9A9A9", "Gray"], ["#000000", "Black"], ["#FFFFFF", "White"]]) {
       await this.createProductColor({
-        productId: denimTearsJeans.id,
+        productId: denimTearsShorts.id,
         color,
         colorName
       });
     }
 
     await this.createReview({
-      productId: denimTearsJeans.id,
+      productId: denimTearsShorts.id,
       rating: 5,
-      title: "Cultural statement piece",
-      content: "Not only are these jeans incredibly well-made, but the cotton wreath symbolism makes them a powerful cultural statement. The fit is perfect and the denim quality is exceptional.",
+      title: "Perfect summer statement piece",
+      content: "These gray cotton wreath sweat shorts are exactly what I needed for summer. The cotton wreath symbolism makes them a powerful cultural statement while keeping cool. The fleece is so comfortable and the elastic waistband makes them perfect for everyday wear.",
       authorName: "Derek W.",
       verifiedPurchase: true,
       date: new Date("2023-09-20")
+    });
+    
+    await this.createReview({
+      productId: denimTearsShorts.id,
+      rating: 5,
+      title: "Super comfortable",
+      content: "I love how the cotton wreaths pop against the gray background. These shorts are so comfortable I practically live in them now. Great quality cotton that doesn't pill even after many washes.",
+      authorName: "Taylor M.",
+      verifiedPurchase: true,
+      date: new Date("2023-08-15")
     });
 
     // 2. Denim Tears Cotton Wreath Hoodie
