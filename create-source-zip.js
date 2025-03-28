@@ -15,8 +15,16 @@ output.on('close', () => {
   // Write the Base64 content to a text file
   fs.writeFileSync('source-code.txt', base64Content);
   
+  // Create a readable listing of the zip contents
+  let fileList = 'Files included in the zip:\n\n';
+  archive.entries.forEach(entry => {
+    fileList += `${entry.name}\n`;
+  });
+  fs.writeFileSync('source-files.txt', fileList);
+  
   console.log('Source code has been zipped and encoded!');
   console.log('The encoded content is in: source-code.txt');
+  console.log('A readable list of files is in: source-files.txt');
 });
 
 archive.on('error', (err) => {
