@@ -478,13 +478,13 @@ export class MemStorage implements IStorage {
     const sp5derTshirt = await this.createProduct({
       name: "SP5DER T-Shirt - NOT IN HAND",
       slug: "sp5der-tshirt",
-      description: "Authentic SP5DER t-shirt with the iconic spider web logo. Premium cotton construction for everyday comfort and style. NOT IN HAND - SIGN UP FOR RESTOCK NOTIFICATIONS.",
+      description: "Authentic SP5DER t-shirt with the iconic spider web logo. Available in Black, Brown, and Navy colorways with unique web designs. Premium cotton construction for everyday comfort and style. NOT IN HAND - SIGN UP FOR RESTOCK NOTIFICATIONS.",
       price: 79,
       originalPrice: 99,
       inspirationBrand: "SP5DER",
       inStock: false,
       categoryId: sp5derCategory.id,
-      details: "The SP5DER t-shirt features the brand's signature spider web design printed on high-quality cotton fabric. The shirt has a modern fit with a crew neckline and short sleeves, making it perfect for everyday wear or as a statement piece in your streetwear collection. NOT IN HAND - SIGN UP FOR RESTOCK NOTIFICATIONS.",
+      details: "The SP5DER t-shirt features the brand's signature spider web design printed on high-quality cotton fabric. Available in multiple colorways: Black with purple web, Brown with yellow web, and Navy with teal web and heart graphic. Each shirt has a modern fit with a crew neckline and short sleeves, making it perfect for everyday wear or as a statement piece in your streetwear collection. NOT IN HAND - SIGN UP FOR RESTOCK NOTIFICATIONS.",
       comparison: "This is an authentic SP5DER t-shirt with the genuine spider web design and branding.",
       material: "100% Cotton\nMachine washable\nImported",
       featured: true,
@@ -493,10 +493,25 @@ export class MemStorage implements IStorage {
       topRated: true
     });
 
+    // Add primary black t-shirt image
     await this.createProductImage({
       productId: sp5derTshirt.id,
-      imageUrl: "/images/sp5der-tshirt.png",
+      imageUrl: "/images/sp5der-tshirt-black.png",
       isPrimary: true
+    });
+    
+    // Add brown t-shirt image
+    await this.createProductImage({
+      productId: sp5derTshirt.id,
+      imageUrl: "/images/sp5der-tshirt-brown.png",
+      isPrimary: false
+    });
+    
+    // Add navy t-shirt image
+    await this.createProductImage({
+      productId: sp5derTshirt.id,
+      imageUrl: "/images/sp5der-tshirt-navy.png",
+      isPrimary: false
     });
 
     for (const size of ["S", "M", "L", "XL", "XXL"]) {
@@ -507,13 +522,44 @@ export class MemStorage implements IStorage {
       });
     }
 
-    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#0000FF", "Blue"]]) {
+    for (const [color, colorName] of [["#000000", "Black"], ["#654321", "Brown"], ["#000080", "Navy"]]) {
       await this.createProductColor({
         productId: sp5derTshirt.id,
         color,
         colorName
       });
     }
+    
+    // Add reviews for the different colorways
+    await this.createReview({
+      productId: sp5derTshirt.id,
+      rating: 5,
+      title: "Black colorway is fire",
+      content: "The black t-shirt with purple web design is so clean. Perfect statement piece that goes with everything. Can't wait for these to be back in stock!",
+      authorName: "Jason M.",
+      verifiedPurchase: true,
+      date: new Date("2023-09-15")
+    });
+    
+    await this.createReview({
+      productId: sp5derTshirt.id,
+      rating: 5,
+      title: "Brown is underrated",
+      content: "The brown tee with yellow web print is my favorite. Such a unique color combo that stands out from the usual black options. Material quality is top-tier.",
+      authorName: "Sophia K.",
+      verifiedPurchase: true,
+      date: new Date("2023-10-03")
+    });
+    
+    await this.createReview({
+      productId: sp5derTshirt.id,
+      rating: 5,
+      title: "Navy with heart design is unique",
+      content: "The navy 'I ♥ SP5DER' t-shirt is my absolute favorite. The teal web design with pink heart makes it stand out from all my other SP5DER pieces. Perfect fit too.",
+      authorName: "Ethan L.",
+      verifiedPurchase: true,
+      date: new Date("2023-08-22")
+    });
 
     // HELLSTAR PRODUCTS
     // 1. Hellstar Hoodie
