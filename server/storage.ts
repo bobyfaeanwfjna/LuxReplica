@@ -708,15 +708,15 @@ export class MemStorage implements IStorage {
 
     // 2. Denim Tears Cotton Wreath Hoodie
     const denimTearsHoodie = await this.createProduct({
-      name: "Cotton Wreath Hoodie",
+      name: "Cotton Wreath Hoodie - Gray",
       slug: "denim-tears-cotton-wreath-hoodie",
-      description: "Authentic Denim Tears hoodie featuring the symbolic cotton wreath design. Premium heavyweight cotton with a comfortable fit.",
+      description: "Authentic Denim Tears hoodie in heather gray featuring the symbolic cotton wreath design. Premium heavyweight cotton with a comfortable fit.",
       price: 169,
       originalPrice: 219,
       inspirationBrand: "Denim Tears",
       inStock: true,
       categoryId: denimTearsCategory.id,
-      details: "This Denim Tears hoodie showcases the brand's signature cotton wreath design, a symbol rich with historical and cultural significance. Made from premium heavyweight cotton, this hoodie offers exceptional comfort with its relaxed fit and soft interior lining.",
+      details: "This Denim Tears hoodie in heather gray showcases the brand's signature cotton wreath design, a symbol rich with historical and cultural significance. The white cotton wreaths pop beautifully against the gray background. Made from premium heavyweight cotton, this hoodie offers exceptional comfort with its relaxed fit and soft interior lining.",
       comparison: "This is an authentic Denim Tears hoodie with the genuine cotton wreath design and premium quality construction.",
       material: "100% Cotton\nHeavyweight 14oz fabric\nMachine washable\nMade in USA",
       featured: true,
@@ -725,17 +725,11 @@ export class MemStorage implements IStorage {
       topRated: true
     });
 
-    await this.createProductImage({
-      productId: denimTearsHoodie.id,
-      imageUrl: "/images/denim-tears-hoodie.png",
-      isPrimary: true
-    });
-    
-    // Add the gray cotton wreath hoodie image
+    // Only use the gray cotton wreath hoodie image
     await this.createProductImage({
       productId: denimTearsHoodie.id,
       imageUrl: "/images/denim-tears-cotton-wreath-hoodie-gray.png",
-      isPrimary: false
+      isPrimary: true
     });
 
     for (const size of ["S", "M", "L", "XL", "XXL"]) {
@@ -746,7 +740,7 @@ export class MemStorage implements IStorage {
       });
     }
 
-    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#A9A9A9", "Gray"], ["#A52A2A", "Brown"]]) {
+    for (const [color, colorName] of [["#A9A9A9", "Gray"], ["#000000", "Black"], ["#FFFFFF", "White"], ["#A52A2A", "Brown"]]) {
       await this.createProductColor({
         productId: denimTearsHoodie.id,
         color,
