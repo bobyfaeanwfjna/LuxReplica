@@ -381,7 +381,7 @@ export class MemStorage implements IStorage {
   private initializeData() {
     // Categories
     const categories = [
-      { name: "Sp5der", slug: "sp5der", imageUrl: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+      { name: "Sp5der", slug: "sp5der", imageUrl: "/images/sp5der-category.png" },
       { name: "Hellstar", slug: "hellstar", imageUrl: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
       { name: "Denim Tears", slug: "denim-tears", imageUrl: "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
     ];
@@ -428,7 +428,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: sp5derHoodie.id,
-      imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      imageUrl: "/images/sp5der-hoodie.png",
       isPrimary: true
     });
 
@@ -479,7 +479,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: sp5derTshirt.id,
-      imageUrl: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      imageUrl: "/images/sp5der-tshirt.png",
       isPrimary: true
     });
 
