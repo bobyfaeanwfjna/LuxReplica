@@ -476,7 +476,7 @@ export class MemStorage implements IStorage {
 
     // 2. SP5DER T-Shirt
     const sp5derTshirt = await this.createProduct({
-      name: "SP5DER T-Shirt",
+      name: "SP5DER T-Shirt - NOT IN HAND",
       slug: "sp5der-tshirt",
       description: "Authentic SP5DER t-shirt with the iconic spider web logo. Premium cotton construction for everyday comfort and style. NOT IN HAND - SIGN UP FOR RESTOCK NOTIFICATIONS.",
       price: 79,
