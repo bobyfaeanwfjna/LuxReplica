@@ -730,6 +730,13 @@ export class MemStorage implements IStorage {
       imageUrl: "/images/denim-tears-hoodie.png",
       isPrimary: true
     });
+    
+    // Add the gray cotton wreath hoodie image
+    await this.createProductImage({
+      productId: denimTearsHoodie.id,
+      imageUrl: "/images/denim-tears-cotton-wreath-hoodie-gray.png",
+      isPrimary: false
+    });
 
     for (const size of ["S", "M", "L", "XL", "XXL"]) {
       await this.createProductSize({
@@ -739,7 +746,7 @@ export class MemStorage implements IStorage {
       });
     }
 
-    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#A52A2A", "Brown"]]) {
+    for (const [color, colorName] of [["#000000", "Black"], ["#FFFFFF", "White"], ["#A9A9A9", "Gray"], ["#A52A2A", "Brown"]]) {
       await this.createProductColor({
         productId: denimTearsHoodie.id,
         color,
@@ -755,6 +762,16 @@ export class MemStorage implements IStorage {
       authorName: "Monica L.",
       verifiedPurchase: true,
       date: new Date("2023-08-12")
+    });
+    
+    await this.createReview({
+      productId: denimTearsHoodie.id,
+      rating: 5,
+      title: "Gray colorway is perfect",
+      content: "Just got the gray cotton wreath hoodie and it's amazing. The heather gray fabric makes the white cotton wreaths really pop. It's a more subtle look than the black version but just as impactful.",
+      authorName: "Jordan K.",
+      verifiedPurchase: true,
+      date: new Date("2023-12-05")
     });
   }
 }
