@@ -2,14 +2,21 @@
 import fs from 'fs';
 import archiver from 'archiver';
 
-// Create a write stream for our zip
+// Create a buffer to store the zip content
 const output = fs.createWriteStream('source-code.zip');
 const archive = archiver('zip', { zlib: { level: 9 } });
 
 // Listen for archive events
 output.on('close', () => {
-  console.log('Source code has been zipped!');
-  console.log('The zip file is in: source-code.zip');
+  // Read the zip file and convert to Base64
+  const zipContent = fs.readFileSync('source-code.zip');
+  const base64Content = zipContent.toString('base64');
+  
+  // Write the Base64 content to a text file
+  fs.writeFileSync('source-code.txt', base64Content);
+  
+  console.log('Source code has been zipped and encoded!');
+  console.log('The encoded content is in: source-code.txt');
 });
 
 archive.on('error', (err) => {
