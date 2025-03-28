@@ -33,8 +33,8 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
           <div className="text-center px-4">
-            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white font-medium mb-4">Premium Design. Exceptional Value.</h1>
-            <p className="text-white text-base md:text-lg mb-8 max-w-2xl mx-auto">Experience luxury fashion without the luxury price tag.</p>
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white font-medium mb-4">(change later title quote)</h1>
+            <p className="text-white text-base md:text-lg mb-8 max-w-2xl mx-auto">(change later subtitle)</p>
             <Link href="#featured-products" className="inline-block bg-white text-black px-8 py-3 uppercase tracking-wide text-sm hover:bg-gray-100 transition-colors">
               Shop Now
             </Link>
@@ -76,7 +76,7 @@ export default function HomePage() {
           <ProductGrid
             products={products || []}
             title="Featured Products"
-            description="Our curated selection of luxury-inspired pieces crafted with premium materials and exceptional attention to detail."
+            description="(change later featured products description)"
             showFilters={true}
             activeFilter={activeFilter}
             onFilterChange={handleFilterChange}
