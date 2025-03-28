@@ -65,10 +65,7 @@ export default function ProductPage() {
     }
     
     try {
-      const addToCartAsync = async () => {
-        await addToCart(product.id, 1, selectedSize || undefined, selectedColor || undefined);
-      };
-      addToCartAsync();
+      await addToCart(product.id, 1, selectedSize || undefined, selectedColor || undefined);
       toast({
         title: "Success",
         description: "Item added to cart",

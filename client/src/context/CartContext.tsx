@@ -64,11 +64,11 @@ export function CartProvider({ children }: CartProviderProps) {
         const response = await fetch("/api/cart", {
           credentials: "include"
         });
-        
+
         if (!response.ok) {
           throw new Error("Failed to fetch cart");
         }
-        
+
         const cartData = await response.json();
         setCart(cartData);
       } catch (error) {
@@ -82,7 +82,7 @@ export function CartProvider({ children }: CartProviderProps) {
         setIsLoading(false);
       }
     }
-    
+
     fetchCart();
   }, [toast]);
 
@@ -94,17 +94,17 @@ export function CartProvider({ children }: CartProviderProps) {
   ) => {
     try {
       setIsLoading(true);
-      
+
       const response = await apiRequest("POST", "/api/cart", {
         productId,
         quantity,
         size,
         color
-      });
-      
+      },{credentials: "include"}); //Added credentials here
+
       const updatedCart = await response.json();
       setCart(updatedCart);
-      
+
       toast({
         title: "Added to cart",
         description: "Product successfully added to your cart.",
@@ -124,12 +124,12 @@ export function CartProvider({ children }: CartProviderProps) {
   const removeItem = async (itemId: number) => {
     try {
       setIsLoading(true);
-      
-      const response = await apiRequest("DELETE", `/api/cart/${itemId}`, undefined);
-      
+
+      const response = await apiRequest("DELETE", `/api/cart/${itemId}`, undefined,{credentials: "include"}); //Added credentials here
+
       const updatedCart = await response.json();
       setCart(updatedCart);
-      
+
       toast({
         title: "Removed from cart",
         description: "Product successfully removed from your cart.",
@@ -149,9 +149,9 @@ export function CartProvider({ children }: CartProviderProps) {
   const updateQuantity = async (itemId: number, quantity: number) => {
     try {
       setIsLoading(true);
-      
-      const response = await apiRequest("PUT", `/api/cart/${itemId}`, { quantity });
-      
+
+      const response = await apiRequest("PUT", `/api/cart/${itemId}`, { quantity },{credentials: "include"}); //Added credentials here
+
       const updatedCart = await response.json();
       setCart(updatedCart);
     } catch (error) {
@@ -169,12 +169,12 @@ export function CartProvider({ children }: CartProviderProps) {
   const clearCart = async () => {
     try {
       setIsLoading(true);
-      
-      const response = await apiRequest("DELETE", "/api/cart", undefined);
-      
+
+      const response = await apiRequest("DELETE", "/api/cart", undefined,{credentials: "include"}); //Added credentials here
+
       const updatedCart = await response.json();
       setCart(updatedCart);
-      
+
       toast({
         title: "Cart cleared",
         description: "Your cart has been cleared.",
@@ -190,7 +190,7 @@ export function CartProvider({ children }: CartProviderProps) {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <CartContext.Provider
       value={{
