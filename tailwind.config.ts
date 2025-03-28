@@ -5,7 +5,7 @@ export default {
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
-      sans: ['Inter', 'system-ui', 'sans-serif'],
+      sans: ['Hammersmith One', 'system-ui', 'sans-serif'],
       serif: ['Playfair Display', 'Georgia', 'serif'],
       mono: ['JetBrains Mono', 'monospace'],
     },
