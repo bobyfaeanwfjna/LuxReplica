@@ -382,7 +382,7 @@ export class MemStorage implements IStorage {
     // Categories
     const categories = [
       { name: "Sp5der", slug: "sp5der", imageUrl: "/images/sp5der-category.png" },
-      { name: "Hellstar", slug: "hellstar", imageUrl: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+      { name: "Hellstar", slug: "hellstar", imageUrl: "/images/hellstar-category.png" },
       { name: "Denim Tears", slug: "denim-tears", imageUrl: "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
     ];
     
@@ -521,7 +521,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: hellstarHoodie.id,
-      imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      imageUrl: "/images/hellstar-tshirt.png",
       isPrimary: true
     });
 
@@ -572,7 +572,7 @@ export class MemStorage implements IStorage {
 
     await this.createProductImage({
       productId: hellstarPants.id,
-      imageUrl: "https://images.unsplash.com/photo-1596609548086-185b28d99687?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      imageUrl: "/images/hellstar-pants.png",
       isPrimary: true
     });
 
